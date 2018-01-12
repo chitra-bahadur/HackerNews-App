@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "928642905697",
+    "firebase_url": "https://sonorous-nomad-190206.firebaseio.com",
+    "project_id": "sonorous-nomad-190206",
+    "storage_bucket": "sonorous-nomad-190206.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928642905697:android:b6f54d1c6d852752",
+        "android_client_info": {
+          "package_name": "com.urbanpiperapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928642905697-gso8l0ujt5f4f40fgvekf64b04a53c6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANvQ8u7rZ0Zzw2_Ef9BblPFx9hxvA-KrU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
