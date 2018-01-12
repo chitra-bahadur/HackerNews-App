@@ -3,7 +3,7 @@
 
     <string name="action_sign_in_short">sign up</string>
     <string name="btn_forgot_password">Forgot Password</string>
-    <string name="btn_link_to_login">Login</string>
+    <string name="btn_link_to_login">Already have account! Login..</string>
     <string name="email">Enter your email</string>
     <string name="heading"> HACKER NEWS</string>
     <string name="heading2">mobile</string>

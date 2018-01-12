@@ -33,16 +33,17 @@ public class CommentsFragment extends BaseFragment implements ApiGetComments.Lis
     private ProgressBar progressBar;
     private Realm realm;
     private int storyId;
-    private int count, commentsCount;
+    private int count, commentsCount, totalComments;
     private CommentsAdapter adapter;
     public CommentsFragment() {
 
     }
 
-    public static CommentsFragment newInstance(int storyId){
+    public static CommentsFragment newInstance(int storyId, int totalComments){
         CommentsFragment fragment = new CommentsFragment();
         Bundle args = new Bundle();
         args.putInt(Constants.STORY_ID, storyId);
+        args.putInt(Constants.TOTAL_COMMENTS, totalComments);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,6 +55,14 @@ public class CommentsFragment extends BaseFragment implements ApiGetComments.Lis
         if(adapter != null && listView != null){
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        storyId = getArguments().getInt(Constants.STORY_ID);
+        totalComments = (int) getArguments().get(Constants.TOTAL_COMMENTS);
     }
 
     @Nullable
@@ -71,13 +80,15 @@ public class CommentsFragment extends BaseFragment implements ApiGetComments.Lis
 
         listView = view.findViewById(R.id.listView);
         progressBar = view.findViewById(R.id.progressBar);
-        storyId = getArguments().getInt(Constants.STORY_ID);
+
         realm = RealmController.getInstance().getRealm();
         RealmResults<Comments> realmResults = RealmController.with(mActivity).getAllCommentsOnStory(storyId);
-        if(realmResults == null || realmResults.size() == 0) {
-            getComments();
-        } else {
-            setAdapter();
+        if(totalComments > 0) {
+            if (realmResults == null || realmResults.size() == 0) {
+                getComments();
+            } else {
+                setAdapter();
+            }
         }
     }
 
@@ -105,7 +116,6 @@ public class CommentsFragment extends BaseFragment implements ApiGetComments.Lis
         if(count == (commentsCount -1)) {
             setAdapter();
             progressBar.setVisibility(View.GONE);
-            realm.close();
         } else {
             count++;
         }

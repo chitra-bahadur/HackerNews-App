@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -16,25 +17,26 @@ public class DateTimeUtils {
     static final long DAY = 24 * 60 * 60;
     static final long HOUR = 60 * 60;
     static final long MINUTE = 60;
-    public static CharSequence getFormattedTime(long time){
+
+    public static CharSequence getElapsedTime(long time){
         //Log.d("DateUtils", "" + DateUtils.formatElapsedTime(time));
 
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(time);
 
         long now = System.currentTimeMillis();
-        long timeGap = now - cal.getTimeInMillis() / 1000;
+        long timeGap = (now - cal.getTimeInMillis()) / 1000;
 
         if (timeGap < 0) {
             return "" + time;
         } else if (timeGap < MINUTE) {
-            return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.SECOND_IN_MILLIS);
+            return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.SECOND_IN_MILLIS) ;
         } else if (timeGap < HOUR) {
             return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS);
         } else if (timeGap < DAY) {
             return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.HOUR_IN_MILLIS);
         } else if (timeGap < WEEK) {
-            return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.DAY_IN_MILLIS);
+            return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.DAY_IN_MILLIS) ;
         } else if (timeGap < WEEK * 4) {
             return DateUtils.getRelativeTimeSpanString(time, now, DateUtils.WEEK_IN_MILLIS);
         }  else if (timeGap < WEEK * 8) {
@@ -58,6 +60,14 @@ public class DateTimeUtils {
         } else {
             return "About an year ago";
         }
+    }
+
+    public static String getFormattedTime(long timeInMillies){
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(timeInMillies);
+        SimpleDateFormat month = new SimpleDateFormat(" dd MMM, yyyy");
+        String time =  month.format(cal.getTime());
+        return time;
     }
 
 }

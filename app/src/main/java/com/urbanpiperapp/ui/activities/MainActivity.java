@@ -17,6 +17,7 @@ import com.urbanpiperapp.data.Story;
 import com.urbanpiperapp.net.ApiGetStory;
 import com.urbanpiperapp.net.ApiGetTopStories;
 import com.urbanpiperapp.ui.adapters.MainAdapter;
+import com.urbanpiperapp.utils.DateTimeUtils;
 import com.urbanpiperapp.utils.NotificationUtils;
 import com.urbanpiperapp.utils.PrefManager;
 
@@ -50,11 +51,9 @@ public class MainActivity extends BaseActivity implements
         if(!pref.isFirstTimeLaunch()) {
             getStoryIds();
         } else {
+            setTitle();
             setAdapter();
         }
-
-        setTitle();
-
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -66,17 +65,9 @@ public class MainActivity extends BaseActivity implements
 
     private void setTitle(){
         long lastUpdated = pref.getLastUpdated();
-        if(lastUpdated == 0){
-            pref.setLastUpdated();
-            lastUpdated = pref.getLastUpdated();
-        }
 
         //calculate the time  between current time and last updated time
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(lastUpdated);
-        int minutes = cal.get(Calendar.MINUTE);
-
-        title = "Updated " + minutes + " mins ago";
+        title = "Updated " + DateTimeUtils.getElapsedTime(lastUpdated);
         lastUpdatedTv.setText(title);
 
     }
@@ -100,6 +91,15 @@ public class MainActivity extends BaseActivity implements
         realm = RealmController.with(mActivity).getRealm();
 
         pref = new PrefManager(mActivity);
+
+        //on click of load more
+        btnLoadMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RealmController.with(mActivity).clearAll();
+                getStoryIds();
+            }
+        });
     }
 
     @Override
@@ -162,8 +162,10 @@ public class MainActivity extends BaseActivity implements
     public void onGetStorySuccess() {
         if(count == (storyCount -1)){
             progressBar.setVisibility(View.GONE);
+            setTitle();
             setAdapter();
             pref.setFirstTimeLaunch(true);
+            pref.setLastUpdated();
         } else {
             count++;
         }

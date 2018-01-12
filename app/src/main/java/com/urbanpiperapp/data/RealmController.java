@@ -58,11 +58,11 @@ public class RealmController {
         realm.refresh();
     }
 
-    //clear all objects from Story.class
+    //clear all objects from Realm
     public void clearAll() {
-
         realm.beginTransaction();
         realm.delete(Story.class);
+        realm.delete(Comments.class);
         realm.commitTransaction();
     }
 

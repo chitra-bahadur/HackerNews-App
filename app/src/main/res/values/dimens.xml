@@ -2,4 +2,8 @@
 <resources>
     <dimen name="padding_10dp">10dp</dimen>
     <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="detail_desc_size">8dp</dimen>
+    <dimen name="article_title">20dp</dimen>
+    <dimen name="article_url">14dp</dimen>
+    <dimen name="article_time_n_user">14dp</dimen>
 </resources>

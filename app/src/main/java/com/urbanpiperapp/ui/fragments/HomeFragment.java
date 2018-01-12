@@ -73,7 +73,7 @@ public class HomeFragment extends BaseFragment {
     public void setTabs(){
         //adding fragments
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(CommentsFragment.newInstance(storyId));
+        fragmentList.add(CommentsFragment.newInstance(storyId, totalComments));
         fragmentList.add(ArticleFragment.newInstance(storyId));
 
         //adding fragments title
@@ -84,6 +84,7 @@ public class HomeFragment extends BaseFragment {
         viewPager.setAdapter(tabAdapter);
         viewPager.setOffscreenPageLimit(1);
         tabs.setupWithViewPager(viewPager);
+        //tabs.setTabTextColors(R.color.white, R.color.white);
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
         tabs.setTabMode(TabLayout.MODE_FIXED);
 
